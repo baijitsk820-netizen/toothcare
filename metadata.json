@@ -1,0 +1,6 @@
+{
+  "name": "Remix: ToothCare Dental Clinic",
+  "description": "Premium Dental Clinic Website for ToothCare Dental Clinic with secure appointment booking, admin dashboard, automated email notifications, and reviews.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

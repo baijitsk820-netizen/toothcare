@@ -1,0 +1,84 @@
+{
+  "entities": {
+    "appointment": {
+      "title": "Appointment",
+      "description": "Details of booked dental appointments",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientName": { "type": "string" },
+        "patientEmail": { "type": "string" },
+        "patientPhone": { "type": "string" },
+        "treatment": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "message": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed", "cancelled"] },
+        "createdAt": { "type": "string" },
+        "adminNotes": { "type": "string" },
+        "emailSent": { "type": "boolean" },
+        "reminderSent24h": { "type": "boolean" },
+        "reminderSent2h": { "type": "boolean" },
+        "reviewRequested": { "type": "boolean" }
+      },
+      "required": ["patientName", "patientPhone", "treatment", "date", "time"]
+    },
+    "contact": {
+      "title": "Contact Message",
+      "description": "Contact form submissions from patients",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "status": { "type": "string", "enum": ["unread", "read", "replied"] }
+      },
+      "required": ["name", "phone", "message"]
+    },
+    "subscriber": {
+      "title": "Newsletter Subscriber",
+      "description": "Subscribers to the clinic's newsletter",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "subscribedAt": { "type": "string" }
+      },
+      "required": ["email"]
+    },
+    "review": {
+      "title": "Clinic Review",
+      "description": "Patient feedback and reviews",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientName": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "source": { "type": "string", "enum": ["google", "private"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["patientName", "rating"]
+    }
+  },
+  "firestore": {
+    "appointments": {
+      "schema": "appointment",
+      "description": "Collection of all appointment bookings"
+    },
+    "contacts": {
+      "schema": "contact",
+      "description": "Collection of customer inquiry messages"
+    },
+    "subscribers": {
+      "schema": "subscriber",
+      "description": "Collection of emails subscribed to the newsletter"
+    },
+    "reviews": {
+      "schema": "review",
+      "description": "Collection of public and private patient reviews"
+    }
+  }
+}

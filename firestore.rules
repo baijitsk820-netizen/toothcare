@@ -1,0 +1,57 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper function to check if user is authenticated
+    function isAdmin() {
+      return request.auth != null;
+    }
+
+    // Appointments Collection
+    match /appointments/{appointmentId} {
+      allow create: if true; // Public can book
+      allow read, update, delete: if isAdmin(); // Only admins can manage
+    }
+
+    // Contacts Collection
+    match /contacts/{contactId} {
+      allow create: if true; // Public can submit contact form
+      allow read, update, delete: if isAdmin(); // Only admins can manage
+    }
+
+    // Subscribers Collection
+    match /subscribers/{subscriberId} {
+      allow create: if true; // Public can subscribe to newsletter
+      allow read, delete: if isAdmin(); // Only admins can manage
+    }
+
+    // Reviews Collection
+    match /reviews/{reviewId} {
+      allow read, create: if true; // Public can read and submit reviews
+      allow update, delete: if isAdmin(); // Only admins can moderate
+    }
+
+    // Admin Notifications Collection
+    match /admin_notifications/{notificationId} {
+      allow create: if true; // Public actions can trigger admin notifications
+      allow read, update, delete: if isAdmin(); // Only admins can view and manage
+    }
+
+    // Triggered Emails Collection (Floating Simulated Mailbox)
+    match /triggered_emails/{emailId} {
+      allow create, read: if true; // Public can see triggered auto-reply templates
+      allow update, delete: if isAdmin(); // Only admins can manage
+    }
+
+    // Test Connection Collection
+    match /test_connection/{docId} {
+      allow read: if true; // Anyone can check connection
+      allow write: if isAdmin();
+    }
+  }
+}
